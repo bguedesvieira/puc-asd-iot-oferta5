@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "535934409776",
+    "firebase_url": "https://comsumo-97e58.firebaseio.com",
+    "project_id": "comsumo-97e58",
+    "storage_bucket": "comsumo-97e58.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:535934409776:android:365a563c94241db2",
+        "android_client_info": {
+          "package_name": "br.iotpuc.consumo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "535934409776-et81330k1fuu5nibjvtglb9fa8kr76nm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.iotpuc.consumo",
+            "certificate_hash": "E01BBA51C6EC66B26934F406E2332BAEA92FF6AC"
+          }
+        },
+        {
+          "client_id": "535934409776-fle822ki2u93juht0qml30oc874c80iq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWbfwnsnYSgOqWun7CleQZ8bGX1NgBZDQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "535934409776-fle822ki2u93juht0qml30oc874c80iq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
