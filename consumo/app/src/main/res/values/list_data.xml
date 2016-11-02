@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="temporalidade">
+        <item>filler</item>
+        <item>@string/lbl_temporalidade_minuto</item>
+        <item>@string/lbl_temporalidade_hora</item>
+        <item>@string/lbl_temporalidade_dia</item>
+        <item>@string/lbl_temporalidade_semana</item>
+        <item>@string/lbl_temporalidade_mes</item>
+    </string-array>
+</resources>

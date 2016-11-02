@@ -34,4 +34,9 @@
     <string name="menu_opcoes">Opções</string>
     <string name="menu_atualizar">Atualizar</string>
     <string name="menu_sair">Sair</string>
+    <string name="lbl_temporalidade_mes">Mês</string>
+    <string name="lbl_temporalidade_semana">Semana</string>
+    <string name="lbl_temporalidade_dia">Dia</string>
+    <string name="lbl_temporalidade_hora">Hora</string>
+    <string name="lbl_temporalidade_minuto">Minuto</string>
 </resources>
