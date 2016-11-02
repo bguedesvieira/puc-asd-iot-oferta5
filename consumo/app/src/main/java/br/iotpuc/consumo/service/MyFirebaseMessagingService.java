@@ -1,4 +1,4 @@
-package br.iotpuc.consumo.br.iotpuc.consumo.service;
+package br.iotpuc.consumo.service;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 

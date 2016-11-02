@@ -24,7 +24,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import br.iotpuc.consumo.br.iotpuc.consumo.util.HttpHandler;
+import br.iotpuc.consumo.util.HttpHandler;
 
 public class ConsumoActivity extends AppCompatActivity {
 
@@ -38,7 +38,7 @@ public class ConsumoActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
     private ProgressDialog pDialog;
-    private ArrayList<HashMap<String, String>> consumoList;
+    ArrayList<HashMap<String, String>> consumoList;
     private ListView lv;
 
     private final static String CONSUMO_URL = "https://thingspeak.com/channels/173362/feeds.json?api_key=7IFEE5OYI37ZX8GR&results=5";
@@ -48,6 +48,13 @@ public class ConsumoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         progressBar = (ProgressBar) findViewById(br.iotpuc.consumo.R.id.progressBar);
         setContentView(R.layout.activity_consumo);
+
+
+        lv = (ListView) findViewById(R.id.list);
+
+
+        new GetConsumo().execute();
+
     }
 
     @Override
@@ -81,11 +88,9 @@ public class ConsumoActivity extends AppCompatActivity {
 
     private void atualizar(){
 //        progressBar.setVisibility(View.VISIBLE);
-        try {
-            wait(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+            new GetConsumo().execute();
+
 //        progressBar.setVisibility(View.GONE);
     }
 
@@ -114,7 +119,7 @@ public class ConsumoActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             HttpHandler sh = new HttpHandler();
-
+            consumoList = new ArrayList<>();
             // Making a request to url and getting response
             String jsonStr = sh.makeServiceCall(CONSUMO_URL);
             Log.e(TAG, "Response from url: " + jsonStr);

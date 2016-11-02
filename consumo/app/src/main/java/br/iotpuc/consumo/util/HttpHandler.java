@@ -1,4 +1,4 @@
-package br.iotpuc.consumo.br.iotpuc.consumo.util;
+package br.iotpuc.consumo.util;
 
 import android.util.Log;
 
