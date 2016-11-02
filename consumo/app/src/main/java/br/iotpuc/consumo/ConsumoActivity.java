@@ -34,7 +34,7 @@ public class ConsumoActivity extends AppCompatActivity {
     private static final String CAMPO_TIPO_TEMPORALIADE = "temporalidade";
     private static final String CAMPO_VALOR="valor";
 
-    private String TAG = MainActivity.class.getSimpleName();
+    private String TAG = ConsumoActivity.class.getSimpleName();
 
     private ProgressBar progressBar;
     private ProgressDialog pDialog;
