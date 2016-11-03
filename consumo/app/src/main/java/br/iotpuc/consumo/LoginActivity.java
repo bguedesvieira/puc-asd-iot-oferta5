@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -32,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         if (auth.getCurrentUser() != null) {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            startActivity(new Intent(LoginActivity.this, ConsumoActivity.class));
             finish();
         }
 
@@ -101,6 +102,7 @@ public class LoginActivity extends AppCompatActivity {
                                         Toast.makeText(LoginActivity.this, getString(br.iotpuc.consumo.R.string.auth_failed), Toast.LENGTH_LONG).show();
                                     }
                                 } else {
+                                    FirebaseMessaging.getInstance().subscribeToTopic("allDevices");
                                     Intent intent = new Intent(LoginActivity.this, ConsumoActivity.class);
                                     startActivity(intent);
                                     finish();
