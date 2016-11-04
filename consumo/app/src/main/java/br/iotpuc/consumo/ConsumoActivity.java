@@ -72,7 +72,7 @@ public class ConsumoActivity extends AppCompatActivity {
             case R.id.opcoes:
                 Intent intent = new Intent(ConsumoActivity.this, MainActivity.class);
                 startActivity(intent);
-                finish();
+//                finish();
                 return true;
             case R.id.atualizar:
                 atualizar();

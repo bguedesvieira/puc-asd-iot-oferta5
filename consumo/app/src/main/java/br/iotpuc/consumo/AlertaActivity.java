@@ -28,6 +28,7 @@ public class AlertaActivity extends AppCompatActivity {
     private ProgressDialog pDialog;
 
     private static final String TAG = AlertaActivity.class.getSimpleName();
+    protected final static String ALERTA_URL = "http://192.168.56.1:8093/user/config";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,14 @@ public class AlertaActivity extends AppCompatActivity {
             }
         });
 
+        new GetAlertas().execute();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new GetAlertas().execute();
     }
 
     private void submeterAlertas(){
@@ -58,8 +67,128 @@ public class AlertaActivity extends AppCompatActivity {
                 txtAlertaMinuto.getText().toString().trim());
     }
 
+    private class GetAlertas extends AsyncTask<Void,Void,JSONObject>{
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Showing progress dialog
+            //pDialog = new ProgressDialog(AlertaActivity.this);
+            //pDialog.setMessage("Please wait...");
+            //pDialog.setCancelable(true);
+            //pDialog = ProgressDialog.show(getApplicationContext(),"Aguarde","Carregando Valores...",false,true ) ;
+
+        }
+
+        @Override
+        protected JSONObject doInBackground(Void... params) {
+            HttpHandler sh = new HttpHandler();
+
+            // Making a request to url and getting response
+            String jsonStr = sh.makeServiceCall(ALERTA_URL);
+            if (jsonStr != null) {
+                try {
+                    JSONObject jsonObj = new JSONObject(jsonStr);
+                    Object mensagem = jsonObj.get("message");
+                    JSONObject result = jsonObj.getJSONObject("result");
+                    if (result == null){
+                        Log.e(TAG, mensagem != null ? mensagem.toString() : "Servidor não retornou informacoes.");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(),
+                                        "Não foi possível retornar os dados de consumo!",
+                                        Toast.LENGTH_LONG)
+                                        .show();
+                            }
+                        });
+                        return null;
+                    }
+                    return result;
+                } catch (final JSONException e) {
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Json parsing error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    });
+
+                }
+            }else {
+                Log.e(TAG, "Servidor não retornou informacoes.");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),
+                                "Não foi possível retornar os dados de consumo!",
+                                Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject result) {
+            super.onPostExecute(result);
+//            pDialog.dismiss();
+
+            if (result != null){
+                try {
+
+                    String temporalidade = result.getString("period");
+                    if (temporalidade != null && !temporalidade.isEmpty()){
+                        int valorInt = Integer.parseInt(temporalidade);
+                        switch (valorInt) {
+                            case 1:
+                                txtAlertaMinuto.setText(result.getString("maxValue"));
+                                break;
+                            case 2:
+                                txtAlertaHora.setText(result.getString("maxValue"));
+                                break;
+                            case 3:
+                                txtAlertaDia.setText(result.getString("maxValue"));
+                                break;
+                            case 4:
+                                txtAlertaSemana.setText(result.getString("maxValue"));
+                                break;
+                            case 5:
+                                txtAlertaMes.setText(result.getString("maxValue"));
+                                break;
+                            default:
+                                Log.e(TAG,"Nao conseguiu definir tipo de alerta" + result.toString());
+                                break;
+                        }
+                    }
+
+                }catch (final JSONException e){
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Json parsing error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    });
+                }
+            }
+
+            // Dismiss the progress dialog
+//            if (pDialog.isShowing() || pDialog.isIndeterminate()) {
+//                pDialog.dismiss();
+//            }
+
+        }
+    }
+
     private class EnviaAlertas extends AsyncTask<String,Void,Void>{
-        private final static String ALERTA_URL = "http://192.168.56.1:8093/user/config";
+
 
         @Override
         protected void onPreExecute() {
@@ -69,8 +198,11 @@ public class AlertaActivity extends AppCompatActivity {
             pDialog.setMessage("Please wait...");
             pDialog.setCancelable(false);
             pDialog.show();
+//                pDialog = ProgressDialog.show(getApplicationContext(),"Aguarde","Carregando Valores...",false,false ) ;
 
         }
+
+
 
         @Override
         protected Void doInBackground(String... params) {
@@ -114,6 +246,7 @@ public class AlertaActivity extends AppCompatActivity {
             if (pDialog.isShowing()) {
                 pDialog.dismiss();
             }
+            Toast.makeText(getApplicationContext(),"Dados Atualizados!",Toast.LENGTH_LONG);
 
         }
         private void submeterAlerta(int temporalidade,final String valor) throws  JSONException, IOException{
