@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity {
 
     private Button btnChangeEmail, btnChangePassword, btnSendResetEmail, btnRemoveUser,
-            changeEmail, changePassword, sendEmail, remove, signOut;
+            changeEmail, changePassword, sendEmail, remove, btnConsumo, btnAlerta, signOut;
 
     private EditText oldEmail, newEmail, password, newPassword;
     private ProgressBar progressBar;
@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
         changePassword = (Button) findViewById(br.iotpuc.consumo.R.id.changePass);
         sendEmail = (Button) findViewById(br.iotpuc.consumo.R.id.send);
         remove = (Button) findViewById(br.iotpuc.consumo.R.id.remove);
+        btnConsumo = (Button) findViewById(R.id.btn_consumo);
+        btnAlerta = (Button) findViewById(R.id.btn_alerta);
         signOut = (Button) findViewById(br.iotpuc.consumo.R.id.sign_out);
 
         oldEmail = (EditText) findViewById(br.iotpuc.consumo.R.id.old_email);
@@ -231,6 +233,24 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnConsumo.setOnClickListener(new View.OnClickListener() {
+
+                                          @Override
+                                          public void onClick(View v) {
+                                              startActivity(new Intent(MainActivity.this, ConsumoActivity.class));
+                                              finish();
+                                          }
+        } );
+
+        btnAlerta.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,AlertaActivity.class));
+                finish();
+            }
+        } );
 
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override

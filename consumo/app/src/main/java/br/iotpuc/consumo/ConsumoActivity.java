@@ -34,7 +34,7 @@ public class ConsumoActivity extends AppCompatActivity {
     private static final String CAMPO_TIPO_TEMPORALIADE = "temporalidade";
     private static final String CAMPO_VALOR="valor";
 
-    private String TAG = ConsumoActivity.class.getSimpleName();
+    private static final String TAG = ConsumoActivity.class.getSimpleName();
 
     private ProgressBar progressBar;
     private ProgressDialog pDialog;
@@ -87,11 +87,7 @@ public class ConsumoActivity extends AppCompatActivity {
     }
 
     private void atualizar(){
-//        progressBar.setVisibility(View.VISIBLE);
-
-            new GetConsumo().execute();
-
-//        progressBar.setVisibility(View.GONE);
+        new GetConsumo().execute();
     }
 
     private void sair(){

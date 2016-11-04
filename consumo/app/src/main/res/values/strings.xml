@@ -26,6 +26,7 @@
     <string name="btn_send">Enviar</string>
     <string name="btn_remove">Remover</string>
     <string name="btn_sign_out">Sair</string>
+    <string name="btn_alerta">Alertas</string>
     <string name="lbl_forgot_password">Esqueceu a senha?</string>
     <string name="forgot_password_msg">Nós precisamos apenas do seu email registrado para enviar instruções de como recuperar sua senha.</string>
     <string name="lbl_atualizar">Atualizar</string>
@@ -39,4 +40,7 @@
     <string name="lbl_temporalidade_dia">Dia</string>
     <string name="lbl_temporalidade_hora">Hora</string>
     <string name="lbl_temporalidade_minuto">Minuto</string>
+    <string name="lbl_valor">Valor</string>
+    <string name="btn_enviar">Enviar</string>
+    <string name="txt_cadastro_alertas">Informe os valores máximos para os tipo de período que desejar;</string>
 </resources>
