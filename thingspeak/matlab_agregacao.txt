@@ -1,0 +1,59 @@
+% Channel ID to read data from
+readChannelID=[ID DO CANAL QUE SERÁ LIDO]
+
+
+% Channel Read API Key 
+% If your channel is private, then enter the read API
+readAPIKey = '[CHAVE DE LEITURA DA API];
+
+
+% Channel ID to write data into
+writeChannelID = [ID DO CANAL QUE SERÁ ESCRITO];
+% Channel Write API Key 
+% If your channel is private, then enter the write API key
+writeAPIKey = '[CHAVE DE ESCRITA DO CANAL];
+
+
+% recupera entradas de consumo ultimo mes
+[consumo,timestamp] = thingSpeakRead(readChannelID, 'Fields', 1, 'NumDays', 30, 'ReadKey', readAPIKey);
+% consumo ultima semana
+% consumoMes = sum(consumo);
+% display(consumoMes, 'Consumo ultimo mes')
+consumoMin=0;
+consumoHora=0;
+consumoDia=0;
+consumoSemana=0;
+consumoMes=0;  
+dateTimeAtual=datetime('now','TimeZone','America/Sao_Paulo');
+limiteMinuto=dateTimeAtual-minutes(1);
+limiteHora=dateTimeAtual-hours(1);
+limiteDia=dateTimeAtual-days(1);
+limiteSemana=dateTimeAtual-days(7);
+limiteMes=dateTimeAtual-days(30);
+
+
+for i=1:length(consumo)
+    consumoMes=consumoMes+consumo(i);
+    if timestamp(i) >= limiteSemana
+        consumoSemana=consumoSemana+consumo(i);
+    end
+    if timestamp(i) >= limiteDia
+        consumoDia=consumoDia+consumo(i);
+    end 
+    if timestamp(i) >= limiteHora
+        consumoHora=consumoHora+consumo(i);
+    end
+    if timestamp(i) >= limiteMinuto
+        consumoMin=consumoMin+consumo(i);
+    end
+end
+
+
+dtRef = datestr(now,'yyyy-mm-dd HH:MM:SS');
+tStamps = datetime('now')-seconds(4):seconds(1):datetime('now');
+% display(tStamps)
+tableData=table([consumoMin;consumoHora;consumoDia;consumoSemana;consumoMes],[1;2;3;4;5],{dtRef;dtRef;dtRef;dtRef;dtRef},'VariableNames',{'Consumo','tipoAgg','dtRef'}, 'RowNames',{'Minuto' 'Hora' 'Dia' 'Semana' 'Mês'});
+% display(tableData)
+
+
+thingSpeakWrite(writeChannelID,'Fields',[1,2,3], 'Values', tableData, 'TimeStamp',tStamps,'writekey', writeAPIKey);

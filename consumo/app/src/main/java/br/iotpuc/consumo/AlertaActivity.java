@@ -89,6 +89,18 @@ public class AlertaActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);
                     Object mensagem = jsonObj.get("message");
+                    if (mensagem != null && "Pesquisa não retornou nenhum resultado!".equals(mensagem.toString())){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(),
+                                        "Pesquisa não retornou nenhum resultado!",
+                                        Toast.LENGTH_LONG)
+                                        .show();
+                            }
+                        });
+                        return null;
+                    }
                     JSONObject result = jsonObj.getJSONObject("result");
                     if (result == null){
                         Log.e(TAG, mensagem != null ? mensagem.toString() : "Servidor não retornou informacoes.");
@@ -246,7 +258,16 @@ public class AlertaActivity extends AppCompatActivity {
             if (pDialog.isShowing()) {
                 pDialog.dismiss();
             }
-            Toast.makeText(getApplicationContext(),"Dados Atualizados!",Toast.LENGTH_LONG);
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(),
+                            "Dados Atualizados!",
+                            Toast.LENGTH_LONG)
+                            .show();
+                }
+            });
 
         }
         private void submeterAlerta(int temporalidade,final String valor) throws  JSONException, IOException{
